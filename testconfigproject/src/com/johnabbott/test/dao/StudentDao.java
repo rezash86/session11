@@ -2,18 +2,20 @@ package com.johnabbott.test.dao;
 
 import java.util.List;
 
-import com.johnabbott.test.model.Student;
+import com.johnabbott.test.model.StudentEntity;
 
 public interface StudentDao {
-	public int insertStudent(Student std); //Create
+	public int insertStudent(StudentEntity std); //Create
 	
-	public List<Student> getStudents(); // Read
+	public List<StudentEntity> getStudents(); // Read
 	
-	public Student getStudentById(int studentId); // Read
+	public StudentEntity getStudentById(int studentId); // Read
+	
+	public StudentEntity getStudentByName(String studentName); //Read
 	
 	public boolean deleteStudent(int studentId); //DELETE
 	
-	public boolean updateStudent(Student std); // UPDATE
+	public boolean updateStudent(StudentEntity std); // UPDATE
 	
 	
 }

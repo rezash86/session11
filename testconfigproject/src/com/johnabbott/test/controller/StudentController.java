@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.johnabbott.test.model.Student;
+import com.johnabbott.test.model.StudentEntity;
 import com.johnabbott.test.service.StudentService;
 
 @Controller
@@ -33,9 +33,9 @@ public class StudentController {
 	public ModelAndView getStudentsList() {
 		ModelAndView modelView = new ModelAndView("student-list");
 
-		List<Student> students = service.getStudents();
+		List<StudentEntity> students = service.getStudents();
 		modelView.addObject("studList", students);
-		modelView.addObject("student", new Student());
+		modelView.addObject("student", new StudentEntity());
 
 		return modelView;
 	}
@@ -53,12 +53,12 @@ public class StudentController {
 	@RequestMapping(value = "addstudent")
 	public ModelAndView addStudent() {
 		ModelAndView mv = new ModelAndView("add-student");
-		mv.addObject("student", new Student());
+		mv.addObject("student", new StudentEntity());
 		return mv;
 	}
 	
 	@RequestMapping(value = "saveStudent", method = RequestMethod.POST)
-	public String saveStudent(@ModelAttribute("student") Student std) {
+	public String saveStudent(@ModelAttribute("student") StudentEntity std) {
 		if (service.addStudent(std))
 			return "redirect:/students/getstudents";
 		else {
@@ -79,13 +79,13 @@ public class StudentController {
 	@RequestMapping(value = "editstudent")
 	public ModelAndView editStudent(@RequestParam("studentId") int studentId) {
 		ModelAndView mv = new ModelAndView("update-student");
-		Student fetchedStudent = service.getStudentById(studentId);
+		StudentEntity fetchedStudent = service.getStudentById(studentId);
 		mv.addObject("editedstudent", fetchedStudent);
 		return mv;
 	}
 
 	@RequestMapping(value = "updateStudent")
-	public String updateStudent(@ModelAttribute("student") Student std) {
+	public String updateStudent(@ModelAttribute("student") StudentEntity std) {
 		if (service.updateStudent(std)) {
 			return "redirect:/students/getstudents";
 		} else {

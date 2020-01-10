@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.johnabbott.test.model.Student;
+import com.johnabbott.test.model.StudentEntity;
 
-public class StudentMapper implements RowMapper<Student> {
+public class StudentMapper implements RowMapper<StudentEntity> {
 
 	@Override
-	public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-		return new Student(rs.getInt("id"), rs.getString("firstname"),
+	public StudentEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return new StudentEntity(rs.getInt("id"), rs.getString("firstname"),
 				rs.getString("lastname"), rs.getInt("age"));
 	}
 

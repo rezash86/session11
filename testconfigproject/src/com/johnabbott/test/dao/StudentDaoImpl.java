@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.johnabbott.test.model.Student;
+import com.johnabbott.test.model.StudentEntity;
 
 
 public class StudentDaoImpl implements StudentDao {
@@ -28,17 +28,17 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public int insertStudent(Student student) {
+	public int insertStudent(StudentEntity student) {
 		return jdbcTemplate.update(SQL_INSERT_STUDENT, student.getFirstName(), student.getLastName(), student.getAge());
 	}
 
 	@Override
-	public List<Student> getStudents() {
+	public List<StudentEntity> getStudents() {
 		return jdbcTemplate.query(SQL_SELECT_STUDENT, new StudentMapper());
 	}
 
 	@Override
-	public Student getStudentById(int studentId) {
+	public StudentEntity getStudentById(int studentId) {
 		return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID, 
 				new Object[]{studentId}, new StudentMapper());
 	}
@@ -50,7 +50,7 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public boolean updateStudent(Student std) {
+	public boolean updateStudent(StudentEntity std) {
 		int updateResult = jdbcTemplate.update
 				(SQL_UPDATE_STUDENT, 
 						std.getFirstName(), 
@@ -58,6 +58,12 @@ public class StudentDaoImpl implements StudentDao {
 						std.getAge(),
 						std.getId());
 		return updateResult > 0;
+	}
+
+	@Override
+	public StudentEntity getStudentByName(String studentName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
