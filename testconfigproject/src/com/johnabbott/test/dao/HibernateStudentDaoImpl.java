@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ public class HibernateStudentDaoImpl implements StudentDao {
 	@Override
 	public int insertStudent(StudentEntity std) {
 		sessionFactory.getCurrentSession().save(std);
+		sessionFactory.getCurrentSession().save(std.getAddress());
 		return 1;
 	}
 
@@ -34,10 +36,17 @@ public class HibernateStudentDaoImpl implements StudentDao {
 	
 	@Override
 	public StudentEntity getStudentByName(String studentName) {
-		List<StudentEntity> list = getSession().
-				createQuery("from StudentEntity where "
-				+ "firstName='"+studentName+ "'", StudentEntity.class).list();
-		return list.get(0);
+		String hql = "from StudentEntity where firstName= :student_name";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("student_name",studentName);
+		if (query.list().size() > 0) {
+			return (StudentEntity)query.list().get(0);
+		}
+		else {
+			return null;
+		}
+			
+		
 	}
 
 	@Override

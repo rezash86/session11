@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.johnabbott.test.model.AddressEntity;
 import com.johnabbott.test.model.StudentEntity;
 import com.johnabbott.test.service.StudentService;
 
@@ -59,6 +60,10 @@ public class StudentController {
 	
 	@RequestMapping(value = "saveStudent", method = RequestMethod.POST)
 	public String saveStudent(@ModelAttribute("student") StudentEntity std) {
+		AddressEntity address = new AddressEntity();
+		address.setStreetName("Sherbrook");
+		address.setStreetNo(16);
+		std.setAddress(address);
 		if (service.addStudent(std))
 			return "redirect:/students/getstudents";
 		else {

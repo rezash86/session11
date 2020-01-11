@@ -2,17 +2,22 @@ package com.johnabbott.test.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "student")
 public class StudentEntity {
-	@Id
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "firstname")
+	@Column(name = "firstname", nullable = false, unique = true)
 	private String firstName;
 	
 	@Column(name = "lastname")
@@ -20,7 +25,10 @@ public class StudentEntity {
 	
 	@Column(name = "age")
 	private int age;
-
+	
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private AddressEntity address;
 	
 	public StudentEntity() {
 		
@@ -64,6 +72,14 @@ public class StudentEntity {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
 	}
 
 	
